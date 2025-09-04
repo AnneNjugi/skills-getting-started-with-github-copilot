@@ -44,39 +44,39 @@ activities = {
         "description": "Join the school soccer team and compete in matches",
         "schedule": "Wednesdays, 4:00 PM - 5:30 PM",
         "max_participants": 18,
-        "participants": ["alex@mergington.edu", "lucas@mergington.edu"]
+        "participants": ["lucas@mergington.edu", "mia@mergington.edu"]
     },
     "Basketball Club": {
         "description": "Practice basketball skills and play friendly games",
         "schedule": "Thursdays, 3:30 PM - 5:00 PM",
         "max_participants": 15,
-        "participants": ["mia@mergington.edu", "noah@mergington.edu"]
+        "participants": ["liam@mergington.edu", "ava@mergington.edu"]
     },
     # Artistic activities
     "Art Workshop": {
         "description": "Explore painting, drawing, and sculpture techniques",
         "schedule": "Mondays, 4:00 PM - 5:30 PM",
         "max_participants": 16,
-        "participants": ["ava@mergington.edu", "liam@mergington.edu"]
+        "participants": ["noah@mergington.edu", "isabella@mergington.edu"]
     },
     "Drama Club": {
         "description": "Act, direct, and produce school plays and performances",
-        "schedule": "Tuesdays, 5:00 PM - 6:30 PM",
+        "schedule": "Tuesdays, 3:30 PM - 5:00 PM",
         "max_participants": 20,
-        "participants": ["ella@mergington.edu", "jack@mergington.edu"]
+        "participants": ["ethan@mergington.edu", "charlotte@mergington.edu"]
     },
     # Intellectual activities
-    "Math Olympiad": {
-        "description": "Prepare for math competitions and solve challenging problems",
-        "schedule": "Fridays, 4:00 PM - 5:30 PM",
+    "Mathletes": {
+        "description": "Compete in math competitions and solve challenging problems",
+        "schedule": "Fridays, 4:00 PM - 5:00 PM",
         "max_participants": 10,
-        "participants": ["ethan@mergington.edu", "grace@mergington.edu"]
+        "participants": ["alex@mergington.edu", "zoe@mergington.edu"]
     },
     "Science Club": {
         "description": "Conduct experiments and explore scientific concepts",
         "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
         "max_participants": 14,
-        "participants": ["chloe@mergington.edu", "ben@mergington.edu"]
+        "participants": ["ben@mergington.edu", "lily@mergington.edu"]
     }
 }
 
@@ -103,6 +103,7 @@ def signup_for_activity(activity_name: str, email: str):
     # Validate student is not already signed up
     if email in activity["participants"]:
         raise HTTPException(status_code=400, detail="Student already signed up for this activity")
+
     # Add student
     activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
