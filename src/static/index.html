@@ -5,6 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mergington High School Activities</title>
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f5f5f5;
+      }
+      .activity-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+      }
+      .activity-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .activity-card h3 {
+        color: #2c3e50;
+        margin-top: 0;
+      }
+      .participants-list {
+        margin-top: 15px;
+        padding-left: 20px;
+        color: #666;
+      }
+      .participants-list h4 {
+        color: #2c3e50;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -26,7 +58,12 @@
         <form id="signup-form">
           <div class="form-group">
             <label for="email">Student Email:</label>
-            <input type="email" id="email" required placeholder="your-email@mergington.edu" />
+            <input
+              type="email"
+              id="email"
+              required
+              placeholder="your-email@mergington.edu"
+            />
           </div>
           <div class="form-group">
             <label for="activity">Select Activity:</label>
@@ -39,6 +76,11 @@
         </form>
         <div id="message" class="hidden"></div>
       </section>
+
+      <section id="activities-display">
+        <h3>All Activities</h3>
+        <div class="activity-grid" id="activities"></div>
+      </section>
     </main>
 
     <footer>
@@ -46,5 +88,33 @@
     </footer>
 
     <script src="app.js"></script>
+    <script>
+      fetch("/activities")
+        .then((response) => response.json())
+        .then((activities) => {
+          const container = document.getElementById("activities");
+          for (const [name, details] of Object.entries(activities)) {
+            const card = document.createElement("div");
+            card.className = "activity-card";
+            card.innerHTML = `
+                        <h3>${name}</h3>
+                        <p>${details.description}</p>
+                        <p><strong>Schedule:</strong> ${details.schedule}</p>
+                        <p><strong>Available Spots:</strong> ${
+                          details.max_participants - details.participants.length
+                        }/${details.max_participants}</p>
+                        <div class="participants-list">
+                            <h4>Current Participants:</h4>
+                            <ul>
+                                ${details.participants
+                                  .map((email) => `<li>${email}</li>`)
+                                  .join("")}
+                            </ul>
+                        </div>
+                    `;
+            container.appendChild(card);
+          }
+        });
+    </script>
   </body>
 </html>
